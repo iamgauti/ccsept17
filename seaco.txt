@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+using namespace std;
+# define mod 1000000007
+int main()
+{
+	long long t;
+	cin>>t;
+	while(t--)
+	{
+		long long n,m,mx;
+		cin>>n>>m;
+		mx=m;
+		vector<long long> a(n+1,0);
+		vector<long long> btype;
+		vector<long long> bl;
+		vector<long long> br;
+		vector<long long> bc(m+1,0);
+		bc[0]=-1;
+		bc[m]=1;
+		btype.push_back(0);
+		bl.push_back(0);
+		br.push_back(0);
+		while(mx--)
+		{
+			long long type,l,r;
+			cin>>type>>l>>r;
+			btype.push_back(type);
+			bl.push_back(l);
+			br.push_back(r);
+		}
+		long long csum=0;
+		for(long long i=m;i>0;i--)
+		{
+		    csum= (csum%mod + (bc[i]+mod)%mod)%mod;
+			if(btype[i]==2)
+			{
+				bc[br[i]]= ((bc[br[i]]+mod)%mod + (csum)%mod)%mod;
+				bc[bl[i]-1]= ((bc[bl[i]-1]+mod)%mod - csum%mod)%mod;
+				//csum= (csum%mod + (bc[i]+mod)%mod)%mod;
+			}
+			//else
+			    //csum= (csum%mod + (bc[i]+mod)%mod)%mod;
+		}
+		csum=bc[m];
+		for(long long i=m-1;i>0;i--)
+		{
+			bc[i]=((bc[i]+mod)%mod + csum%mod)%mod;
+			csum=bc[i];
+		}
+		for(long long i=1;i<=m;i++)
+			{
+				if(btype[i]==1)
+				{
+					a[bl[i] - 1]=((a[bl[i] - 1]+mod)%mod + (bc[i]+mod)%mod)%mod;
+					a[br[i]]=((a[br[i]]+mod)%mod - (bc[i]+mod)%mod)%mod;
+				}
+			}
+		long long sum=0;
+		for(long long i=0;i<n;i++)
+		{
+			a[i]= ((a[i]+mod)%mod + sum%mod)%mod;
+			
+			sum=a[i];
+			cout<<a[i]<<" ";
+		}
+		cout<<endl;
+	}
+}
