@@ -1,0 +1,4 @@
+# ccsept17
+CodeChef September Long Challenge 2017
+
+THIS REPO CONTAINS ONLY GOOD QUESTION OF LONG CHALLENGE 2017. 
